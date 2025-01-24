@@ -12,7 +12,9 @@ public class Belonging {
 
     @EmbeddedId
     private BelongingPK id = new BelongingPK();
+
     private Integer position;
+
     public Belonging(){}
 
     public Belonging(Game game, GameList list, Integer position) {
@@ -41,11 +43,11 @@ public class Belonging {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Belonging belonging = (Belonging) o;
-        return Objects.equals(id, belonging.id) && Objects.equals(position, belonging.position);
+        return Objects.equals(id, belonging.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, position);
+        return Objects.hashCode(id);
     }
 }
