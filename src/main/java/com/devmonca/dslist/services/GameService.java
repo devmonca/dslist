@@ -3,6 +3,7 @@ package com.devmonca.dslist.services;
 import com.devmonca.dslist.dto.GameDTO;
 import com.devmonca.dslist.dto.GameMinDTO;
 import com.devmonca.dslist.entities.Game;
+import com.devmonca.dslist.projection.GameMinProjection;
 import com.devmonca.dslist.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,20 @@ public class GameService {
     @Transactional(readOnly = true)
     public List<GameMinDTO> findAll(){
         List<Game> response = gameRepository.findAll();
-        List<GameMinDTO> dto = response.stream().map(x -> new GameMinDTO(x)).toList();
-        return dto;
+        return response.stream().map(x -> new GameMinDTO(x)).toList();
     }
 
     @Transactional(readOnly = true)
     public GameDTO findById(Long id){
         Game response = gameRepository.findById(id).get();
         return new GameDTO(response);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId){
+        List<GameMinProjection> response = gameRepository.searchByList(listId);
+        return response.stream().map(x-> new GameMinDTO(x)).toList();
     }
 
 }
